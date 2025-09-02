@@ -1,2 +1,10 @@
 # rr-validity
-Analysis code for manuscript "Structural Validity of a Recognition Ratings Measure of Interpretation Biases in Anxious Adults Seeking Web-Based Interpretation Bias Modification"
+This repository contains analysis code for this project on the Open Science Framework: https://osf.io/sth87/.
+
+# Data
+
+TODO
+
+# Code
+
+TODO
