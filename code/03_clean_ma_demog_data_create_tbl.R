@@ -49,8 +49,10 @@ source("./code/01c_set_officer_properties.R")
 
 load("./data/ma/intermediate/dat_ma_dem.RData")
 
-load("./data/ma/intermediate/raw_dat_sb.RData")
-load("./data/ma/intermediate/raw_dat_osf.RData")
+# Import raw demographics data
+
+load("./data/ma/intermediate/raw_dat_sb_dem.RData")
+load("./data/ma/intermediate/raw_dat_osf_dem.RData")
 
 # ---------------------------------------------------------------------------- #
 # Clean age ----
@@ -66,12 +68,8 @@ sum(is.na(dat_ma_dem$birthYear)) == 12
 
 missing_birthYear_ids <- dat_ma_dem$participant_id[is.na(dat_ma_dem$birthYear)]
 
-raw_dat_sb_tmp <- 
-  raw_dat_sb$Demographic_recovered_Feb_02_2019[raw_dat_sb$Demographic_recovered_Feb_02_2019$participantRSA %in% 
-                                                 missing_birthYear_ids, ]
-raw_dat_osf_tmp <-
-  raw_dat_osf$Demographics_02_02_2019[raw_dat_osf$Demographics_02_02_2019$participantRSA %in% 
-                                        missing_birthYear_ids, ]
+raw_dat_sb_tmp  <- raw_dat_sb_dem[raw_dat_sb_dem$participantRSA   %in% missing_birthYear_ids, ]
+raw_dat_osf_tmp <- raw_dat_osf_dem[raw_dat_osf_dem$participantRSA %in% missing_birthYear_ids, ]
 
 raw_dat_sb_tmp$participantRSA <- as.integer(raw_dat_sb_tmp$participantRSA)
 

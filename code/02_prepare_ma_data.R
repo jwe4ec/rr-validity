@@ -372,6 +372,11 @@ dat_ma_dem <- dat_ma_dem[, c("participant_id", dem_cols)]
 
 names(dat_ma_dem) <- sub("demographic_", "", names(dat_ma_dem))
 
+# Extract raw demographics data to investigate "birthYear" in "clean_ma_demog_data_create_tbl.R"
+
+raw_dat_sb_dem  <- raw_dat_sb$Demographic_recovered_Feb_02_2019
+raw_dat_osf_dem <- raw_dat_osf$Demographics_02_02_2019
+
 # ---------------------------------------------------------------------------- #
 # Export data ----
 # ---------------------------------------------------------------------------- #
@@ -386,5 +391,7 @@ dir.create("./data/ma/intermediate")
 save(dat_ma_rr,  file = "./data/ma/intermediate/dat_ma_rr.RData")
 save(dat_ma_dem, file = "./data/ma/intermediate/dat_ma_dem.RData")
 
-save(raw_dat_sb,  file = "./data/ma/intermediate/raw_dat_sb.RData")
-save(raw_dat_osf, file = "./data/ma/intermediate/raw_dat_osf.RData")
+# Export raw demographics tables
+
+save(raw_dat_sb_dem,  file = "./data/ma/intermediate/raw_dat_sb_dem.RData")
+save(raw_dat_osf_dem, file = "./data/ma/intermediate/raw_dat_osf_dem.RData")
