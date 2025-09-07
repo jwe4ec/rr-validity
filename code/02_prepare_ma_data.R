@@ -31,14 +31,11 @@
 #    available. However, the file was likely created by adjusting the script "R34.ipynb" 
 #    in the study's Data Cleaning folder (https://bit.ly/3CLi5It) on GitHub.
 
-# 2. Raw data files obtained from Sonia Baee on 9/3/2020, who stated on that date that
-#    they represent the latest version of the database on the R34 server and that she 
-#    obtained them from Claudia Calicho-Mamani
+# 2. Raw data files obtained from Sonia Baee on 9/3/2020 (called Set A in this script), 
+#    who stated on that date that they represent the latest version of the database on 
+#    the R34 server and that she obtained them from Claudia Calicho-Mamani
 
-# 3. Raw data files from the OSF project for the Managing Anxiety study, which Yuhan
-#    Hou uploaded on 3/16/2023 after dumping the CSV files from the "teachmanlab" SQL
-#    Data Server using Grafana (because the "angular_training" table was too large to
-#    obtain via Grafana, Yuhan dumped it directly from the Data Server).
+# 3. A partial set of raw data files obtained from Sonia Baee on 1/18/2023 (called Set B)
 
 # Although the present script mentions Calm Thinking analyses, we decided not to
 # analyze Calm Thinking data as part of the dissertation's scope
@@ -72,41 +69,39 @@ dat_main_bl_items  <- read.csv("./data/ma/source/clean_from_main_paper/R34_Cronb
 dat_main_lg_scales <- read.csv("./data/ma/source/clean_from_main_paper/R34_FinalData_New_v02.csv")
 
 # ---------------------------------------------------------------------------- #
-# Import raw data files from Sonia and from MA study OSF project ----
+# Import raw data files from Sonia ----
 # ---------------------------------------------------------------------------- #
 
-# Obtain file names of raw CSV data files from Sonia (see Source 2 above) and
-# from MA study OSF project (see Source 3 above)
+# Obtain file names of Sets A and B of raw CSV data files from Sonia (see Sources
+# 2 and 3 above for more info)
 
-raw_data_dir_sb  <- paste0(wd_dir, "/data/ma/source/raw_from_sonia")
-raw_data_dir_osf <- paste0(wd_dir, "/data/ma/source/raw_from_osf")
+raw_data_dir_son_a <- paste0(wd_dir, "/data/ma/source/raw_from_sonia_a")
+raw_data_dir_son_b <- paste0(wd_dir, "/data/ma/source/raw_from_sonia_b")
 
-raw_filenames_sb  <- list.files(raw_data_dir_sb, 
-                                pattern = "*.csv", full.names = FALSE)
-raw_filenames_osf <- list.files(raw_data_dir_osf, 
-                                pattern = "*.csv", full.names = FALSE)
+raw_filenames_son_a <- list.files(raw_data_dir_son_a, pattern = "*.csv", full.names = FALSE)
+raw_filenames_son_b <- list.files(raw_data_dir_son_b, pattern = "*.csv", full.names = FALSE)
 
 # Import raw data files and store them in list
 
-raw_dat_sb  <- lapply(paste0(raw_data_dir_sb,  "/", raw_filenames_sb),  read.csv)
-raw_dat_osf <- lapply(paste0(raw_data_dir_osf, "/", raw_filenames_osf), read.csv)
+raw_dat_son_a <- lapply(paste0(raw_data_dir_son_a, "/", raw_filenames_son_a), read.csv)
+raw_dat_son_b <- lapply(paste0(raw_data_dir_son_b, "/", raw_filenames_son_b), read.csv)
 
 # Name each raw data file in list
 
 split_char <- ".csv"
 
-names(raw_dat_sb)  <- unlist(lapply(raw_filenames_sb,
-                                    function(f) {
-                                      unlist(strsplit(f,
-                                                      split = split_char,
-                                                      fixed = FALSE))[1]
-                                    }))
-names(raw_dat_osf) <- unlist(lapply(raw_filenames_osf,
-                                    function(f) {
-                                      unlist(strsplit(f,
-                                                      split = split_char,
-                                                      fixed = FALSE))[1]
-                                    }))
+names(raw_dat_son_a) <- unlist(lapply(raw_filenames_son_a,
+                                      function(f) {
+                                        unlist(strsplit(f,
+                                                        split = split_char,
+                                                        fixed = FALSE))[1]
+                                      }))
+names(raw_dat_son_b) <- unlist(lapply(raw_filenames_son_b,
+                                      function(f) {
+                                        unlist(strsplit(f,
+                                                        split = split_char,
+                                                        fixed = FALSE))[1]
+                                      }))
 
 # ---------------------------------------------------------------------------- #
 # Decide which data to use for measurement analyses ----
@@ -324,8 +319,8 @@ sum(!is.na(dat_main_lg_scales$bbsiq_physical_score_PRE)) == 797
 sum(!is.na(dat_main_lg_scales$bbsiq_threat_score_PRE))   == 797
 sum(!is.na(dat_main_lg_scales$negativeBBSIQ_PRE))        == 797
 
-# Moreover, additional baseline RR and BBSIQ data are not in raw data from Sonia or 
-# in raw data from OSF project for Managing Anxiety study (see Sources 2 and 3 above)
+# Moreover, additional baseline RR and BBSIQ data are not in raw data Sets A or B
+# (see Sources 2 and 3 above)
 
 # Remove participants with no RR item-level data at baseline
 
@@ -374,8 +369,8 @@ names(dat_ma_dem) <- sub("demographic_", "", names(dat_ma_dem))
 
 # Extract raw demographics data to investigate "birthYear" in "clean_ma_demog_data_create_tbl.R"
 
-raw_dat_sb_dem  <- raw_dat_sb$Demographic_recovered_Feb_02_2019
-raw_dat_osf_dem <- raw_dat_osf$Demographics_02_02_2019
+raw_dat_son_a_dem <- raw_dat_son_a$Demographic_recovered_Feb_02_2019
+raw_dat_son_b_dem <- raw_dat_son_b$Demographics_02_02_2019
 
 # ---------------------------------------------------------------------------- #
 # Export data ----
@@ -393,5 +388,5 @@ save(dat_ma_dem, file = "./data/ma/intermediate/dat_ma_dem.RData")
 
 # Export raw demographics tables
 
-save(raw_dat_sb_dem,  file = "./data/ma/intermediate/raw_dat_sb_dem.RData")
-save(raw_dat_osf_dem, file = "./data/ma/intermediate/raw_dat_osf_dem.RData")
+save(raw_dat_son_a_dem, file = "./data/ma/intermediate/raw_dat_son_a_dem.RData")
+save(raw_dat_son_b_dem, file = "./data/ma/intermediate/raw_dat_son_b_dem.RData")

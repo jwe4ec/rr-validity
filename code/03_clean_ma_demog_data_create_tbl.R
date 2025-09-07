@@ -51,8 +51,8 @@ load("./data/ma/intermediate/dat_ma_dem.RData")
 
 # Import raw demographics data
 
-load("./data/ma/intermediate/raw_dat_sb_dem.RData")
-load("./data/ma/intermediate/raw_dat_osf_dem.RData")
+load("./data/ma/intermediate/raw_dat_son_a_dem.RData")
+load("./data/ma/intermediate/raw_dat_son_b_dem.RData")
 
 # ---------------------------------------------------------------------------- #
 # Clean age ----
@@ -68,27 +68,27 @@ sum(is.na(dat_ma_dem$birthYear)) == 12
 
 missing_birthYear_ids <- dat_ma_dem$participant_id[is.na(dat_ma_dem$birthYear)]
 
-raw_dat_sb_tmp  <- raw_dat_sb_dem[raw_dat_sb_dem$participantRSA   %in% missing_birthYear_ids, ]
-raw_dat_osf_tmp <- raw_dat_osf_dem[raw_dat_osf_dem$participantRSA %in% missing_birthYear_ids, ]
+raw_dat_son_a_tmp <- raw_dat_son_a_dem[raw_dat_son_a_dem$participantRSA %in% missing_birthYear_ids, ]
+raw_dat_son_b_tmp <- raw_dat_son_b_dem[raw_dat_son_b_dem$participantRSA %in% missing_birthYear_ids, ]
 
-raw_dat_sb_tmp$participantRSA <- as.integer(raw_dat_sb_tmp$participantRSA)
+raw_dat_son_a_tmp$participantRSA <- as.integer(raw_dat_son_a_tmp$participantRSA)
 
-# View(raw_dat_sb_tmp[order(raw_dat_sb_tmp$participantRSA), ])
-# View(raw_dat_osf_tmp[order(raw_dat_osf_tmp$participantRSA), ])
+# View(raw_dat_son_a_tmp[order(raw_dat_son_a_tmp$participantRSA), ])
+# View(raw_dat_son_b_tmp[order(raw_dat_son_b_tmp$participantRSA), ])
 
 # With one exception (i.e., "birthYear" of 2222 for participant 1344), the values
-# for "birthYear" from "raw_dat_osf" seem correct. Use those "birthYear"s and the
+# for "birthYear" from "raw_dat_son_b" seem correct. Use those "birthYear"s and the
 # "date"s of the responses so that "age"s can be computed below.
 
-names(raw_dat_osf_tmp)[names(raw_dat_osf_tmp) == "participantRSA"] <- "participant_id"
+names(raw_dat_son_b_tmp)[names(raw_dat_son_b_tmp) == "participantRSA"] <- "participant_id"
 
 dat_ma_dem$birthYear[match(missing_birthYear_ids, dat_ma_dem$participant_id)] <-
-  raw_dat_osf_tmp$birthYear[match(missing_birthYear_ids, raw_dat_osf_tmp$participant_id)]
+  raw_dat_son_b_tmp$birthYear[match(missing_birthYear_ids, raw_dat_son_b_tmp$participant_id)]
 
 dat_ma_dem$date <- NA
 
 dat_ma_dem$date[match(missing_birthYear_ids, dat_ma_dem$participant_id)] <-
-  raw_dat_osf_tmp$date[match(missing_birthYear_ids, raw_dat_osf_tmp$participant_id)]
+  raw_dat_son_b_tmp$date[match(missing_birthYear_ids, raw_dat_son_b_tmp$participant_id)]
 
 # Recode "2222" to NA, leaving only 2 values of NA (one was "2222"; another was "0")
 
