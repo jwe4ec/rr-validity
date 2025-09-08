@@ -75,33 +75,21 @@ dat_main_lg_scales <- read.csv("./data/ma/source/clean_from_main_paper/R34_Final
 # Obtain file names of Sets A and B of raw CSV data files from Sonia (see Sources
 # 2 and 3 above for more info)
 
-raw_data_dir_son_a <- paste0(wd_dir, "/data/ma/source/raw_from_sonia_a")
-raw_data_dir_son_b <- paste0(wd_dir, "/data/ma/source/raw_from_sonia_b")
+raw_data_dir_son_a <- paste0(wd_dir, "/data/ma/source/raw_from_sonia_a/")
+raw_data_dir_son_b <- paste0(wd_dir, "/data/ma/source/raw_from_sonia_b/")
 
-raw_filenames_son_a <- list.files(raw_data_dir_son_a, pattern = "*.csv", full.names = FALSE)
-raw_filenames_son_b <- list.files(raw_data_dir_son_b, pattern = "*.csv", full.names = FALSE)
+raw_filenames_son_a <- list.files(raw_data_dir_son_a, pattern = "\\.csv$")
+raw_filenames_son_b <- list.files(raw_data_dir_son_b, pattern = "\\.csv$")
 
 # Import raw data files and store them in list
 
-raw_dat_son_a <- lapply(paste0(raw_data_dir_son_a, "/", raw_filenames_son_a), read.csv)
-raw_dat_son_b <- lapply(paste0(raw_data_dir_son_b, "/", raw_filenames_son_b), read.csv)
+raw_dat_son_a <- lapply(paste0(raw_data_dir_son_a, raw_filenames_son_a), read.csv)
+raw_dat_son_b <- lapply(paste0(raw_data_dir_son_b, raw_filenames_son_b), read.csv)
 
 # Name each raw data file in list
 
-split_char <- ".csv"
-
-names(raw_dat_son_a) <- unlist(lapply(raw_filenames_son_a,
-                                      function(f) {
-                                        unlist(strsplit(f,
-                                                        split = split_char,
-                                                        fixed = FALSE))[1]
-                                      }))
-names(raw_dat_son_b) <- unlist(lapply(raw_filenames_son_b,
-                                      function(f) {
-                                        unlist(strsplit(f,
-                                                        split = split_char,
-                                                        fixed = FALSE))[1]
-                                      }))
+names(raw_dat_son_a) <- tools::file_path_sans_ext(raw_filenames_son_a)
+names(raw_dat_son_b) <- tools::file_path_sans_ext(raw_filenames_son_b)
 
 # ---------------------------------------------------------------------------- #
 # Decide which data to use for measurement analyses ----
