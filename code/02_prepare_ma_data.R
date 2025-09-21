@@ -31,11 +31,14 @@
 #    available. However, the file was likely created by adjusting the script "R34.ipynb" 
 #    in the study's Data Cleaning folder (https://bit.ly/3CLi5It) on GitHub.
 
-# 2. Raw data files obtained from Sonia Baee on 9/3/2020 (called Set A in this script), 
-#    who stated on that date that they represent the latest version of the database on 
-#    the R34 server and that she obtained them from Claudia Calicho-Mamani
+# 2. 26 raw data files obtained from Sonia Baee on 9/3/2020, who stated on that 
+#    date that they represent the latest version of the database on the R34 server 
+#    and that she obtained them from Claudia Calicho-Mamani. These are Set A from
+#    "public-v1.0.0.zip" on the Public Component (https://osf.io/2x3jq/) of the
+#    OSF project for the Managing Anxiety study (https://osf.io/pvd67/).
 
-# 3. A partial set of raw data files obtained from Sonia Baee on 1/18/2023 (called Set B)
+# 3. A partial set of 20 raw data files obtained from Sonia Baee on 1/18/2023.
+#    These are Set B from "public-v1.0.0.zip".
 
 # Although the present script mentions Calm Thinking analyses, we decided not to
 # analyze Calm Thinking data as part of the dissertation's scope
